@@ -18,6 +18,6 @@ public interface UserDao {
     User getUserInfo(@Param("userName") String userName);
 
     @Insert("insert into user (user_name, user_email, user_password) values (#{userName}, #{userEmail}, #{userPassword})")
-    int addUser(@Param("userName") String userName, @Param("userEmail") String userEmail, @Param("userPassword") String userPassword);
+    int addUser(User newUser);
 
 }

@@ -4,8 +4,8 @@ import com.springboot.entities.User;
 
 public interface UserService {
 
-    public int addUser();
+    int addUser(User newUser);
 
-    public User getUserInfo(String userName);
+    User getUserInfo(String userName);
 
 }

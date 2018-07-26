@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello world!</title>
+    </head>
+    <body>
+        <h1 align="center">Create New Account</h1>
+         <p>
+            Username<input type="text" id="userName" />
+            <button onclick="getUserInfo()" type="button">Get Info</button>
+        </p>
+        <form>
+            Username<br/>
+            <input type="text" id="name"/><br/>
+            Email<br/>
+            <input type="text" id="email"/><br/>
+            Password<br/>
+            <input type="text" id="password"/><br/>
+            Confirm Password<br/>
+            <input type="text" id="confirm"/>
+        </form>
+        <p>
+            <button onclick="signUp();" type="button" class="button btn">Sign up</button>
+        </p>
+        <script type="text/javascript" src="../js/jquery-1.7.min.js"></script>
+        <script>
+            function signUp() {
+                const name = $('#name').val();
+                const email = $('#email').val();
+                const password = $('#password').val();
+                $.post("addUser",
+                    {
+                        userName: name,
+                        userEmail: email,
+                        userPassword: password
+                    },
+                    function (data) {
+                        alert("done")
+                    });
+            }
+
+            function getUserInfo() {
+                var name = document.getElementById("userName").val;
+                $.post("getUserInfo",
+                    {
+                        userName: name
+                    },
+                    function (data) {
+                        alert("done!" + data);
+                    });
+            }
+        </script>
+    </body>
+</html>
