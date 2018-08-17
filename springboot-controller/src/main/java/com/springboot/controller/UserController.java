@@ -4,7 +4,6 @@ import com.springboot.entities.User;
 import com.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +21,7 @@ public class UserController {
         return userService.addUser(newUser);
     }
 
-    @RequestMapping(value = "getUserInfo", method = RequestMethod.POST)
+    @RequestMapping("getUserInfo")
     public User getUserInfo(String userName) {
         return userService.getUserInfo(userName);
     }

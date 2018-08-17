@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>WebSocket Test</title>
+    </head>
+    <body>
+        <div>
+            <button onclick="connect()" id="connect">Connect</button>
+            <button onclick="disconnect()" id="disconnect">Disconnect</button>
+        </div>
+        <p id="status"></p>
+        <div>
+            <input type="text" id="name"/>
+            <button id="send" onclick="sendRequest()">Send</button>
+        </div>
+        <div id="msg"/>
+
+        <script type="text/javascript" src="/js/jquery-1.7.min.js"></script>
+        <script type="text/javascript" src="/js/stomp.min.js"></script>
+        <script>
+            var stompClient = null;
+
+            function connect() {
+                if ('WebSocket' in window) {
+                    var websocket = new WebSocket("ws://localhost:8080/endpoint");
+                    stompClient = Stomp.over(websocket);
+
+                    stompClient.connect({}, function (frame) {
+                        console.log('Connected: ' + frame);
+                        $("#status").html("Connected to server");
+                        stompClient.subscribe("/topic/greeting", function(greeting) {
+                            $("#msg").html(greeting.body);
+                        });
+                    });
+                }
+                else {
+                    alert('Not support WebSocket')
+                }
+            }
+
+            function disconnect() {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                console.log("Disconnected");
+                document.getElementById("status").innerHTML = "Disconnected";
+            }
+
+            function sendRequest() {
+                stompClient.send("/app/request", {}, JSON.stringify({
+                    'name': $("#name").val()
+                }));
+            }
+        </script>
+    </body>
+</html>
